@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link href = "styles.css" rel = "stylesheet">
+    </head>
+
+    <body style = "background-color: black;"> 
+
+
+        <!--游戏内界面-->
+        <div center id = "gameInterface">
+
+            <!--顶端横幅-->
+            <div id = "menuPanel">
+                <div class = "menu" id = "menu"     style = "left: 5%;  background-color: rgb(33, 200, 122);"></div>   <!--菜单-->
+                <div class = "menu" id = "star"     style = "left: 62%; background-color: rgb(114, 97, 0);"></div>    <!--成就-->
+                <div class = "menu" id = "donate"   style = "left: 63%; background-color: white;"></div>            <!--捐赠-->
+            </div>
+
+            <!--历史记录-->
+            <div class = "historyList" id = "historyList"><div id = "theLine"></div>
+            </div>
+
+            <!--侧边状态栏-->
+            <div class = "characterList" id = "characterList">
+
+                <div id = "infoList">   <!--信息栏-->
+
+                    <div id = "avatar" style = "max-height:150px">  <!--头像-->
+                        <img src="test.jpeg" style = "max-height:150px;"></img>
+                    </div>
+                    <hr>
+
+                    <div id="" style="position: relative; text-align: center;">
+                        <div id="name" style="display: inline-block; position: relative;">郭大臭</div>
+                        <div id="gender" style="display: inline-block; position: relative;">♂</div>
+                    </div>
+                    
+                    <div id="age" style="text-align: center;"></div>
+
+                </div>
+
+                <div id="attrList">      <!--特质栏-->
+                    <hr>
+                </div>
+            </div>
+
+            <!--选择栏-->
+            <div id="choiceTable">
+                <div id="choiceHeading"></div>
+                <div id="choiceContent"></div>
+                <div id="choiceList"></div>
+            </div>
+
+        </div>
+        
+
+        <script src="life.js"> </script>
+
+
+    </body>
+
+</html>
