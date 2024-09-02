@@ -1,5 +1,61 @@
-const ATTRIBUTES = JSON.parse('{"tag":[{"id":1000000,"caption":"皮肤黝黑"},{"id":1000001,"caption":"贫穷"},{"id":1000002,"caption":"富裕"},{"id":1000003,"caption":"强壮"},{"id":1000004,"caption":"脑洞"},{"id":1000005,"caption":"好胜"},{"id":1000006,"caption":"音乐"},{"id":1000007,"caption":"多病"},{"id":1000008,"caption":"烟瘾"},{"id":1000009,"caption":"身体协调"},{"id":1000010,"caption":"记忆"},{"id":1000011,"caption":"高情商"},{"id":1000012,"caption":"逻辑"},{"id":1000013,"caption":"好奇"},{"id":1000014,"caption":"吹口哨高手"},{"id":1000015,"caption":"熊孩子"},{"id":1000016,"caption":"近视眼"},{"id":1000017,"caption":"内向"},{"id":1010001,"caption":"户✌"}],"background":[{"id":0,"caption":"尖子生"},{"id":101,"caption":"老钱"}],"perk":[{"id":0,"caption":"健康"},{"id":1,"caption":"财富"},{"id":2,"caption":"学习成绩"},{"id":3,"caption":"音乐能力"},{"id":4,"caption":"画图能力"}],"achievement":[{}]}');
-const EVENTS = JSON.parse('{"born":[{"id":0,"heading":"出生","content":"伴随着啼哭声，一个黑漆漆的婴儿降生了。母亲：“孩子这么黑，就叫%name吧。”","choice":[{"caption":"下一事件","attr":[["皮肤黝黑",1]],"perkChange":[["健康",100],["财富",5]]}]},{"id":1,"heading":"出生：贫穷","content":"%name出生在一个低保户家庭，家里穷得叮当响。","choice":[{"caption":"下一事件","attr":[["贫穷",1]],"perkChange":[["健康",100],["财富",2]]}]},{"id":2,"heading":"出生：富裕","content":"%name出生在一个城市家庭，住在二环内的一个大House里。","choice":[{"caption":"下一事件","attr":[["富裕",1]],"perkChange":[["健康",100],["财富",8]]}]},{"id":3,"heading":"出生：户✌","content":"%name出生在了申国户市，成为了大名鼎鼎的户✌。","choice":[{"caption":"下一事件","attr":[["富裕",1],["户✌",1]],"perkChange":[["健康",100],["财富",10]]}]},{"id":101,"heading":"出生：老钱","content":"一颗燃烧着熊熊烈火的橡皮泥（？）从天上坠落。一个好奇的妇人路过，发现里面包裹着婴儿，她决定收养这个婴儿，取名为%name。","choice":[{"caption":"下一事件","background":["老钱"],"perkChange":[["健康",100],["财富",5]]}]}],"normal":{"kid":[{"id":0,"heading":"学走路","content":"%name%blank的时候，突然学会了走路。","choice":[{"caption":"闯祸了被人追着打","attr":[["强壮",1]]},{"caption":"吃脚趾","attr":[["脑洞",1]]},{"caption":"和狗抢东西吃","attr":[["好胜",1]]},{"caption":"模仿MJ","attr":[["音乐",1]],"perkChange":[["音乐能力",1]]},{"caption":"看手把手教学"},{"caption":"走路还用学？","attr":[["身体协调",1]],"eventHeading":"天才","eventContent":"%name一生下来就会走路，根本不用学。"}]},{"id":1,"heading":"天赋","content":"%name一出生就%blank。","choice":[{"caption":"会跟小动物说话","eventLink":21,"ageChange":0},{"caption":"身体折起来，能吃到自己下面","attr":[["身体协调",1]],"eventContent":"%name一出生就身体折起来，能自己吃到自己下面。自从掌握了新姿势，蛋白质不流失、不蒸发、零浪费！"},{"caption":"能过目不忘","attr":[["记忆",1]]},{"caption":"学会说粗口","attr":[["高情商",1]]},{"caption":"酗酒","attr":[["多病",1]]},{"caption":"吸烟","attr":[["烟瘾",1]]},{"caption":"会飙歌","attr":[["音乐",1]],"perkChange":[["音乐能力",1]]},{"caption":"会素描","perkChange":[["画图能力",1]]},{"caption":"目的性很强","attr":[["逻辑",1]]},{"caption":"喜欢问5W1H","attr":[["好奇",1]]},{"caption":"会吹口哨","attr":[["音乐",1],["吹口哨高手",1]],"perkChange":[["音乐能力",1]]},{"caption":"是个熊孩子","attr":[["熊孩子",1]]}]},{"id":2,"heading":"幼儿日常","content":"%name%blank。","choice":[{"caption":"喜欢看电视","attr":[["近视眼",1]]},{"caption":"对玩具非常着迷","eventLink":"玩具迷","ageChange":0},{"caption":"喜欢玩耍","eventLink":21,"ageChange":0},{"caption":"喜欢玩平板电脑","attr":[["近视眼",1]]},{"caption":"经常安静地呆着","attr":[["内向",1]]}]},{"id":1000,"heading":"玩具迷","content":"%name最喜欢的玩具是%blank。","choice":[{"caption":"十万片的拼图","attr":[["近视眼",1]]},{"caption":"四驱车","eventLink":"玩具迷"},{"caption":"吸氧羊","eventLink":21},{"caption":"彩虹小马","attr":[["近视眼",1]]},{"caption":"超人变身器","attr":[["内向",1]]},{"caption":"烟花炮竹","attr":[["死亡",1]],"eventContent":"%name很喜欢放烟花，喜欢看爆炸的破坏力。有一次他把烟花插进屁股缝里点燃，烟花直接在他的屁股里爆炸，%name就这样失去了年轻的生命。"},{"caption":"电子琴","attr":[["内向",1]]},{"caption":"NS的LABO","attr":[["内向",1]]}]}]}}');
+function PriorityQueue() 
+{
+    var items = [];
+    function QueueElement(element, priority) 
+    {
+        this.element = element;
+        this.priority = priority;
+    }
+    this.push = function(element, priority) 
+    {
+        var queueElement = new QueueElement(element, priority);
+        var inserted = false;
+        for(var i = 0; i < items.length; ++i)
+        {
+            if (queueElement.priority > items[i].priority) 
+            {
+                items.splice(i, 0, queueElement);
+                inserted = true;
+                break;
+            }
+        }
+        if (!inserted) items.push(queueElement);
+    }
+    this.pop = function()
+    {
+        if (this.empty()) return;
+        items.pop();
+    }
+    this.top = function()
+    {
+        if (this.empty()) return;
+        return items[0].element;
+    }
+    this.randomPop = function()
+    {
+        if (this.empty()) return;
+        var idx = Math.floor(Math.random() * items.length);
+        var res = items[idx];
+        items.splice(idx, 1);
+        return res;
+    }
+    this.size = function() { return items.length; }
+    this.empty = function() { return items.length == 0; }    
+    this.print = function() { return items; }        
+}
+
+
+async function getJSON(path)
+{
+    var res;
+    await fetch(path)
+    .then(response => response.json())
+    .then((json) => { res = json; });
+    //console.log(res);
+    return res;
+}
+const EVENTS = await getJSON("events.json");
+const ATTRIBUTES = await getJSON("attributes.json");
 const NAME = document.getElementById("name").innerHTML;
 const BLANK = "____";
 const INDENT = "&emsp;&emsp;"
@@ -7,10 +63,16 @@ const INDENT = "&emsp;&emsp;"
 
 
 
+var allNormalEvents = new PriorityQueue();
+var currentNormalEvents = new PriorityQueue();
+var currentSerialEvents = [];
+
+
+
+
 var historyList = document.getElementById("historyList");
 var eventHistory = [], choiceHistory = [], ageHistory = [];
-var eventNumKid = 3;
-var chosen = 0, linked = 0, linkedSet;
+var state, linked, linkedSet;
 
 
 
@@ -18,7 +80,7 @@ var chosen = 0, linked = 0, linkedSet;
 var attrList = document.getElementById("attrList");
 var ageTag = document.getElementById("age");
 var tagList = [], backgroundList = [], perksIDList = [], perksPointList = [];
-var age = 0;
+var age;
 
 
 
@@ -123,16 +185,7 @@ function updateTagList(list, deltaList)
     }
 }
 
-function updateBackgroundList(list, deltaList)
-{
-    for (let idx = 0; idx < deltaList.length; ++idx)
-    {
-        let flag = list.indexOf(deltaList[idx]);
-        if (flag == -1) list.push(deltaList[idx]);
-    }
-}
-
-function updatePerkList(IDList, pointList, deltaList)
+function updatePerkListByChange(IDList, pointList, deltaList)
 {
     for (let idx = 0; idx < deltaList.length; ++idx)
     {
@@ -146,21 +199,22 @@ function updatePerkList(IDList, pointList, deltaList)
     }
 }
 
-function showEvent(eventSet, id)
+function updatePerkListByRemove(IDList, pointList, deltaList)
 {
-    while (choiceList.hasChildNodes()) choiceList.removeChild(choiceList.childNodes[0]);
-    //while(choiceContent.hasChildNodes()) choiceList.removeChild(choiceList.childNodes[0]);
-    let event;
-    for(let i = 0; i < eventSet.length; ++i)
+    for (let idx = 0; idx < deltaList.length; ++idx)
     {
-        if(eventSet[i].id == id)
+        let flag = IDList.indexOf(deltaList[idx]); //If not found, return -1.
+        if (flag != -1)
         {
-            event = eventSet[i];
-            break;
+            IDList.splice(flag, 1);
+            pointList.splice(flag, 1);
         }
     }
+}
 
-
+function showEvent(event)
+{
+    while (choiceList.hasChildNodes()) choiceList.removeChild(choiceList.childNodes[0]);
     choiceHeading.innerHTML = INDENT + event.heading;
     choiceContent.innerHTML = INDENT + replaceEscapeChr(event.content);
 
@@ -173,8 +227,9 @@ function showEvent(eventSet, id)
 
             let curChoice = event.choice[i];
             if("attr" in curChoice) updateTagList(tagList, curChoice.attr);
-            if("background" in curChoice) updateBackgroundList(backgroundList, curChoice.background);
-            if("perkChange" in curChoice) updatePerkList(perksIDList, perksPointList, curChoice.perkChange);
+            if("background" in curChoice) updateTagList(backgroundList, curChoice.background);
+            if("perkChange" in curChoice) updatePerkListByChange(perksIDList, perksPointList, curChoice.perkChange);
+            if("perkRemove" in curChoice) updatePerkListByRemove(perksIDList, perksPointList, curChoice.perkRemove); 
 
 
             eventHistory.push(event);
@@ -187,7 +242,7 @@ function showEvent(eventSet, id)
                 linked = curChoice.eventLink;
                 linkedSet = eventSet;
             }
-            chosen = 1;
+            state = 1;
             
             
             showAttr();
@@ -202,23 +257,21 @@ function showEvent(eventSet, id)
 
 function born()
 {
-    chosen = 0;
+    state = 0;
     ageTag.innerHTML = age.toString() + "岁";
-    var isNormal = Math.random();
-    if (isNormal > 0)
-    {
-        var id = Math.floor(Math.random() * 4);
-        showEvent(EVENTS.born,id);
-    }
-    else
-    {
+    //var isNormal = Math.random();
+    var idx = Math.floor(Math.random() * EVENTS.born.length - 1);
+    showEvent(EVENTS.born[idx]);
+}
 
-    }
+function eventUpdate()
+{
+    
 }
 
 function eventGenerate()
 {
-    chosen = 0;
+    state = 0;
     if (linked != 0)
     {
         for (let i = 0; i < linkedSet.length; ++i)
@@ -252,9 +305,47 @@ function eventGenerate()
 
 function mainLoop()
 {
-    if (chosen == 1) eventGenerate();
+    if (state == 1) eventUpdate(), eventGenerate();
+    else if (state == 2) ;
     requestAnimationFrame(mainLoop);
 }
 
+
+function init()
+{
+    for (let i = 0; i < EVENTS.normal.length; ++i) allNormalEvents.push(EVENTS.normal[i]);
+    age = 0;
+    state = 0;
+}
+
+
+init();
 born();
 requestAnimationFrame(mainLoop);
+/*
+
+出生
+从出生事件中抽取事件
+
+全部基本事件按年龄下限排列
+按年龄下限 且符合条件 进入优先队列
+队列内按年龄上限排列，超过该年龄直接出队，未超过年龄但不符合条件的放回全部基本事件
+{
+    条件：
+        tag     ["caption", 1/0]
+                            有/无
+        perk    ["caption", -1/0/1, value]
+                            小于/等于/大于
+}
+
+
+随机从优先队列中抽取事件
+抽到的事件出队
+
+触发系列事件
+改变状态，创建事件池，记录跳出所需经历的事件数/年数
+
+死亡
+检测特质栏是否有死亡标签
+
+*/
